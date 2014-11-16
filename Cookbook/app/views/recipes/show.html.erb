@@ -1,0 +1,14 @@
+<h2>Show</h2>
+
+<h3><%= @recipe.name%></br></h3>
+<%image_tag @recipe.avatar.url%>
+<%= image_tag @recipe.avatar.url(:medium)%>
+<%= @recipe.content%>
+<% @recipe.tags.each do |tag|%>
+<p>
+	<%= tag.name%>
+</p>
+<%end%>
+
+	 
+<%= link_to 'Index', root_path %>

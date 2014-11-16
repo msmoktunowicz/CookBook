@@ -1,0 +1,49 @@
+<h1>Recipes Index</h1>
+
+
+<div id="tag_cloud" >
+<% ActsAsTaggableOn::Tag.all.each do |tag|%>
+<%= link_to tag.name, recipes_path(tag: tag.name)  %>
+<% end %>
+</div>
+
+<%= form_tag recipes_path , :method => 'get' do %>
+	<p>
+		<%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", name: :nil %>
+	</p>
+<% end %>
+ 
+<% @recipes.each_with_index do |recipe, index|%>
+	
+	<%= content_tag(:h3, index+1)%>	
+	<%= content_tag(:h3,recipe.name)%>
+	<%= image_tag recipe.avatar.url(:medium)%><br/>
+	<%= content_tag(:span, recipe.content)%>
+	<p>Data dodania:
+		<%= content_tag(:span, recipe.created_at)%>
+	</p>
+	<% if recipe.tags.any? %>
+		<p>Tag:
+			<% recipe.tags.each do |tag| %>
+			<%= link_to tag.name, recipes_path(tag: tag.name)%>
+			<% end %>
+		</p>
+	<% end %>
+	
+	<p>
+	<% if user_signed_in?%>
+	 <%= link_to 'Edytuj', edit_recipe_path(recipe)%>
+	 <%= link_to 'Show', recipe %> 
+	 <%= link_to 'Usun',recipe, method: :delete, data: {confirm: "Na pewno ?"}%>
+	<% end %>
+	</p>
+
+<% end %>
+<%= will_paginate @recipes %>
+<p align="center">
+
+<%= link_to 'New Recipe', new_recipe_path %>
+<%= link_to 'Index', root_path %>
+<%= link_to 'Cusine tags',  acts_as_taggable_on_tags_path %>
+</p>

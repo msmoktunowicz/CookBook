@@ -1,0 +1,11 @@
+<%= simple_form_for @recipe, :html => {:multipart => true} do |f|%>
+	
+	<%= f.file_field :avatar%> 
+	<%= f.input :name %>
+	<%= f.input :content %>
+	<%= f.input :created_at %>
+	<%= f.input :tag_list %>
+	<%= f.submit :create %>
+
+<% end %>
+
